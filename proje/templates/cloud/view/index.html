@@ -1,0 +1,245 @@
+{%extends 'base/index.html'%}
+{%load static%}
+{%block content%}
+<div class="content-page">
+    <div class="container-fluid">
+       <div class="card cardback border-none" >
+           <div class="card-body">
+              <div class="row">
+                    
+                    <div class="col-lg-12 table-container">
+                       <ul class="nav nav-pills cardback tab-pills body-tab-pills" id="pills-tab" role="tablist">
+                          <li class="nav-item">
+                             <a class="nav-link active" data-toggle="pill" href="#servers" role="tab" aria-controls="domains" style="background-color: rgb(234, 234, 248);" aria-selected="true">Servers</a>
+                          </li>
+                          
+                       </ul>
+                       {%include 'cloud/view/servers.html'%}
+                    </div>
+              </div>
+           </div>
+       <!-- Page end  -->
+   </div>
+     </div>
+{%endblock content%}
+
+
+{%block css%}
+<style>
+.img-responsive {
+   max-width: 30px;
+   max-height: 30px;
+   width: auto;
+   height: auto;
+ }
+ .containerOS {
+  white-space: nowrap;
+}
+
+.img,
+.name {
+  display: inline-block;
+  vertical-align: top;
+}
+.version{
+   text-align: right;
+}
+.tr-body{
+  background-color: rgb(234, 234, 248);
+}
+.white-background {
+        background-color: white;
+    }
+.cardback {
+   background-color: rgba(255, 255, 255, 0);
+  }
+.tab-content.task-content ul{
+    position: relative;
+    top: -100px;
+}
+.row.align-items-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+.create-a a {
+    margin-right: 15px;
+  }
+
+/* Table */
+
+
+.serversTable tr{
+  margin-bottom: 10px;
+}
+
+.serversTable tr:last-child{
+  margin-bottom: 0px;
+}
+
+.serversTable td{
+  padding: 10px;
+}
+.tr-space {
+  margin-bottom: 20px;
+}
+
+
+.table-next {
+   
+  text-align: right;
+}
+.serversborder-left {
+
+  background-color: white;
+    border: 20px solid white;
+    border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  
+}
+
+.serversborder-right {
+
+background-color: white;
+  border: 20px solid white;
+  border-top-right-radius: 20px;
+border-bottom-right-radius: 20px;
+
+}
+.table-next button,
+.table-next span {
+   
+  float: right;
+}
+.table-container {
+    margin-bottom: 10px;
+  }
+#emptyTableMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+  }
+  table tr td {
+    font-weight: bold;
+    
+  }
+  
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  
+.serversborder-head-left {
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+}
+.serversborder-head-right {
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+}
+ 
+</style>
+
+
+{%endblock css%}
+
+
+
+{%block js%}
+<script>
+
+   // td render
+
+   $(document).ready(function() {
+    $("table td:not(:last-child):lt(4)").click(function() {
+      var serverID = document.getElementById("serverID");
+      var serverIDval = serverID.value;
+        navigateToPage(serverIDval);
+    }).css("cursor", "pointer");
+   });
+   
+   function navigateToPage(pageName) {
+       window.location.href = "server-view/" + pageName;
+       
+   }
+
+   // Table Next
+
+   var table = document.getElementById("myTable");
+    var currentPage = document.getElementById("currentPage");
+    var rowsPerPage = 5;
+    var currentPageIndex = 0;
+
+    function showPage(pageIndex) {
+        var rows = table.tBodies[0].rows;
+        var start = pageIndex * rowsPerPage;
+        var end = start + rowsPerPage;
+
+        for (var i = 0; i < rows.length; i++) {
+            if (i >= start && i < end) {
+                rows[i].style.display = "table-row";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+
+        currentPage.textContent = pageIndex + 1;
+    }
+
+    function previousPage() {
+        if (currentPageIndex > 0) {
+            currentPageIndex--;
+            showPage(currentPageIndex);
+        }
+    }
+
+    function nextPage() {
+        var totalRows = table.tBodies[0].rows.length;
+        var totalPages = Math.ceil(totalRows / rowsPerPage);
+
+        if (currentPageIndex < totalPages - 1) {
+            currentPageIndex++;
+            showPage(currentPageIndex);
+        }
+    }
+
+    showPage(currentPageIndex);
+
+    // Table Filter
+    
+    $(document).ready(function() {
+      $("#filterInput").on("input", function() {
+        var filterValue = $(this).val().toLowerCase();
+
+        $("#myTable tbody tr").each(function() {
+          var td1 = $(this).find("td:eq(0)").text().toLowerCase();
+          var td2 = $(this).find("td:eq(1)").text().toLowerCase();
+          if (td1.indexOf(filterValue) > -1 || td2.indexOf(filterValue) > -1) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
+    });
+
+// Table create
+
+
+  var emptyTableMessage = document.getElementById("emptyTableMessage");
+
+  if (table.rows.length === 1) { // 1 row = header row, no data rows
+    emptyTableMessage.style.display = "flex";
+  } else {
+    emptyTableMessage.style.display = "none";
+  }
+  emptyTableMessage.addEventListener("click", function() {
+    window.location.href = "/cloud/create-server";
+  });
+</script>
+
+{%endblock js%}
+
+

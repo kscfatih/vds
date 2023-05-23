@@ -1,0 +1,63 @@
+{%load static%}
+<h4 class="mb-4">Location</h4>
+<ul class="nav nav-pills tab-pills body-tab-pills" id="pills-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" style="background-color: rgb(234, 234, 248);" data-toggle="pill" href="#distributions" role="tab" aria-controls="distributions" aria-selected="true">County</a>
+    </li>
+    
+</ul>
+<div class="tab-content task-content create-droplet">
+<div class="tab-pane fade show active" id="distributions" role="tabpanel">                     
+    <div class="card border-none bg-body">
+        <div class="card-body custom-card-space" style="background-color: rgb(234, 234, 248);">
+            <div class="row">
+                {%for i in location%}  
+                <div class="col-lg-3">
+                    <div class="card card-location" onclick="locationC(this)">
+                        <div class="card-body card-body-location ">
+                            <input type="hidden" id="locationId" name="locationId" value="{{i.id}}" />
+                            
+                            <img src="http://135.181.207.142:1000/{{ i.img_url }}" class="img-responsive img" alt="">
+                            <h4>{{i.location_name}}</h4>
+                            <hr>
+                            <h6>city/{{i.location_city}}</h6>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+{%block css%}
+<style>
+.img-responsive {
+    max-width: 30px;
+    max-height: 30px;
+    width: auto;
+    height: auto;
+  }
+
+  .card-location {
+  transition: height 0.3s ease-in-out;
+}
+
+.card-location {
+  height: 80px;
+}
+.card-body-location {
+  display: flex;
+  align-items: center;
+}
+
+.card-body-location img {
+  margin-right: 10px; /* İsteğe bağlı olarak sağa boşluk ekleyebilirsiniz */
+}
+</style>
+  {%endblock css%}

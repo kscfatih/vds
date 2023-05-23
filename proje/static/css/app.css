@@ -1,0 +1,14 @@
+.list-side {
+    list-style-type: none;
+    padding: 0;
+    
+  }
+  
+.list-side li {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+.h4-side {
+    color : #062b78;
+  }

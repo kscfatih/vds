@@ -1,0 +1,85 @@
+<h4 class="mb-4">Configuration</h4>                                        
+                        <ul class="nav nav-pills tab-pills body-tab-pills" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="pill" href="#basic2" role="tab" style="background-color: rgb(234, 234, 248);">Basic</a>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content task-content" >
+                            <div class="tab-pane cardback show active" id="basic2" role="tabpanel" >
+                                <div class="card border-none cardback bg-body" >
+                                    <div class="card-body cardback custom-card-space" style="background-color: rgb(234, 234, 248);">
+                                        <div class="row" >
+                                          
+                                            {% for i in server_package%}
+                                           <div class="col-lg-4" >
+                                                <div class="card " onclick="highlightCard(this)">
+                                                    <div class="card-body packname p-0">
+                                                        <h3 style="color: #062b78; font-weight: bold;">{{i.package_name}}</h3>
+                                                        <div class="rounded-top p-2 bg-primary">
+                                                            <div class="d-block m-auto text-center">
+                                                                <div class="media align-items-center justify-content-center">
+                                                                    
+                                                                    <div class="d-flex align-items-top">
+                                                                        <span class="h2 pr-1">{{i.package_price}}$</span>
+                                                                    </div>
+                                                                    <span>/ Month</span>
+                                                                </div>
+                                                                <span>$0.007/Hour</span>
+                                                            </div>
+                                                        </div>
+
+                                                        
+                                                        <!-- input content-->
+                                                        <input type="hidden" class="input-field" value="{{i.id}}" name="packId">
+                                                        
+                                                    
+                                                   
+                                                       <ul class="list-inline p-0 m-0">
+                                                            <li class="p-3 border-bottom">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <h6>{{i.package_ram}} GB RAM /<span class="text-body"> {{i.package_cpu}} CPU</span></h6>
+                                                                    <svg class="svg-icon text-success" height="20" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </div>
+                                                            </li>
+                                                            <li class="p-3 border-bottom">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <h6>{{i.package_disk}} GB<span class="text-body"> SSD</span></h6>
+                                                                    <svg class="svg-icon text-success" height="20" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </div>
+                                                            </li>
+                                                            <li class="p-3">
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <h6>{{i.package_transfer_limit}} GB<span class="text-body"> Transfer</span></h6>
+                                                                    <svg class="svg-icon text-success" height="20" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+
+
+
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {%endfor%}
+                                       
+
+                                           
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+
+                        </div> 
+

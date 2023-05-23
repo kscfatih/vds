@@ -1,0 +1,23 @@
+{% load static %}
+{% if request.user.is_authenticated %}
+<!doctype html>
+<html lang="en">
+  <head>
+    {%include 'base/inc/head.html'%}
+    {%block css %}{%endblock css %}
+  </head>
+  <body class=" ">
+    <div id="loading"><div id="loading-center"></div></div>
+    <div class="wrapper">
+      {%include 'base/inc/sidebar.html'%}
+      {%include 'base/inc/modal.html'%}
+      {%include 'base/inc/navbar.html'%}
+      {%block content %}{%endblock content %}
+    </div>
+    <footer class="iq-footer">{%include 'base/inc/footer.html'%}</footer>
+    {%include 'base/inc/script.html'%}
+    {%block js%}{%endblock js%}
+    
+  </body>
+</html>
+{% endif %}

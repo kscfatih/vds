@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sunucu Bilgileri</title>
+</head>
+<body>
+    <h1>Sunucu Bilgileri</h1>
+    <p>Sunucu ID: {{ vm_config.vmid }}</p>
+    <p>Sunucu İsmi: {{ vm_config.name }}</p>
+    <p>Sunucu Durumu: {{ vm_config.status }}</p>
+    <p>Sunucu CPU: {{ vm_config.cpus }}</p>
+    <p>Sunucu RAM: {{ vm_config.maxmem|filesizeformat }}</p>
+    <p>Toplam Disk Alanı: {{ vm_config.disk|filesizeformat }}</p>
+
+    
+</body>
+</html>

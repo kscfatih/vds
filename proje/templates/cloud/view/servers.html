@@ -1,0 +1,117 @@
+{%load static%}
+<div class="tab-content task-content">
+    <div class="tab-pane fade show active" id="servers" role="tabpanel">                     
+       <div class="card border-none mb-0 bg-body">
+          <div class="card-body custom-card-space"  style="background-color: rgb(234, 234, 248); ">
+           
+           
+         
+                <div class="row align-items-center">
+                   <div class="col-lg-5">
+                      <div class="form-group">
+                         <label>IP & Name :</label>
+                         <input type="text" id="filterInput"  class="form-control bg-white form-control-lg" placeholder="IP & Name ...">
+                      </div>
+                   </div>
+                   <div class="create-a">
+                   <a href="/cloud/create-server" class="btn btn-primary mt-5 mt-lg-0">Create Server</a>
+                 </div>
+                </div>
+               
+                
+           
+             <div class="col-lg-4">
+
+              
+           </div>
+            
+             <div class="table-responsive p-0 rounded mb-0 tbl-server-info">
+                <table  id="myTable" class="table mb-0 tr-body tbl-networking-info serversTable">
+                
+
+                   <thead class="text-uppercase">
+                         <tr class="" style="background-color: #062b78;">
+                           
+                            <th class="serversborder-head-left" style="color: white;" >Public IP</th>
+                            <th style="color: white;">Name</th>
+                            <th style="color: white;">OS</th>
+                            <th style="color: white;">Location</th>
+                            
+                            <th style="color: white;">status</th>
+                            <th  class="serversborder-head-right" style="color: white;" >Action</th>
+
+                         </tr>
+                   </thead>
+
+
+                   <tbody class="ligth-body">
+             
+                     {% for i in server_list %}
+                    
+                     <tr  class="tr-body  tr-space">
+                        
+                        <td class="white-background serversborder-left">
+                           <input type="hidden" id="serverID" value="55">
+                           {{i.server_ip.ip}}
+                        </td>
+                        <td class="white-background">
+                             <div>{{i.server_name}}</div>
+                             <p class="mb-0">1A/3 NS/1SOA/1 TXT</p>
+                        </td>
+                        <td class="white-background">
+                           <div class="containerOS">
+                           <img src="{%static 'images/os/ubuntu.png'%}" class="img-responsive img" alt="">
+                           <div class="name">{{i.server_os.os_name}}<p class="mb-0 version" >{{i.server_os.os_version}}</p></div>
+                           </div>
+                        </td>
+                        <td class="white-background">
+                           <img src="{%static 'images/locations/turkey.png'%}" class="img-responsive img" alt="">
+                           {{i.server_location.location_name}} / {{i.server_location.location_city}}
+                        </td>
+                        <td class="white-background"> <div class="custom-control custom-switch ">
+                           <input type="checkbox" class="custom-control-input"checked="">
+                           {{vm_config.status}}
+                        </td>
+                        <td class="white-background serversborder-right">
+                              <button class="btn btn-light"><i class="fa-solid fa-gear fa-spin"></i></button>
+                           
+                        </td>
+                       </tr>
+                     </div>
+                      {% endfor %}
+                    
+                     
+                      
+                      
+                   </tbody>
+                </table>
+             </div><br>
+             <div class="col-lg-12">
+              <a href="create-server"></a>
+              <div class="card text-center" id="emptyTableMessage" style="display: none;">
+                 
+                <div class="card-body">
+                
+                  <i class="ri-information-line ri-4x line-height text-primary"></i>
+                  <h5 class="card-title mt-1">Henüz sunucunuz yok!</h5>
+                  <p class="mb-0">Yeni bir sunucu kurmak için tıklayın</p>
+                
+                </div>
+            
+              </div>
+           </a>
+            </div>
+            
+            
+             <div id="pagination" class="table-next">
+              <button class="btn btn-primary" onclick="nextPage()">next</button>
+              <span class="btn btn-primary" style="background-color: white; color: black;"  id="currentPage">1</span>
+              <button class="btn btn-primary" onclick="previousPage()">previous</button>
+          </div>
+          </div>
+       </div>
+    </div>
+
+ </div>
+
+

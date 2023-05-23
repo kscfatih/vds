@@ -1,0 +1,290 @@
+{%extends 'base/index.html'%}
+
+{%block content%}
+
+    {% csrf_token %}
+<div class="content-page">
+    <div class="container-fluid">
+       <div class="row">
+           <div class="col-lg-12">
+               <div class="card cardback border-none">
+                   <div class="card-body custom-card-space">
+                    {% csrf_token %}
+                    {%include 'cloud/create/os-packages.html'%}
+                    <hr>
+                    {%include 'cloud/create/location.html'%}
+                    <hr>
+                    {%include 'cloud/create/server-packages.html'%}
+                    </div><hr><br>
+                    {%include 'cloud/create/add-option.html'%}
+                   
+                <hr>
+               <input type="hidden" class="project_id" value="{{project_id}}" >
+                 <div class="col-lg-12">
+                        <div class="card border-none bg-body">
+                            <div class="card-body pb-3">
+                                <h4 class="mb-3">Finalize and create</h4>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>how many droplets ?</label>
+                                            <input type="text" id="dropletsInput" class="form-control" placeholder="">
+                                            <div class="btn-group btn-group-toggle btn-group-droplets"> 
+                                                <a class="button btn button-icon border" onclick="decreaseDroplets()" ><i class="ri-subtract-line m-0"></i></a>
+                                                <a class="button btn button-icon bg-primary" onclick="increaseDroplets()" ><i class="ri-add-line m-0"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="form-group "  id="hostnameContainer">
+                                            <label>Choose a hostname</label>
+                                            <input type="text" name="hostname" class="form-control hostname" value="ubuntu-s-4vcpu-8gb-nyc1-01">
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- <div class="col-lg-12">
+                        <div class="card border-none">
+                            <div class="card-header d-flex justify-content-between pt-0 px-0 border-none">
+                                <div class="header-title">
+                                    <h4 class="card-title">Add Backup</h4>
+                                </div>                        
+                                <div class="card-header-toolbar d-flex align-items-center">
+                                    <button type="button" class="btn btn-primary mr-3">Enable</button>
+                                    <button type="button" class="btn btn-light disabled" disabled="">Disable</button>
+                                </div>
+                            </div>
+                            <div class="card-body bg-body rounded">
+                                <div class="checkbox custom-checkbox d-inline-block mb-2">
+                                    <input type="checkbox" class="checkbox-input mr-3" id="checkbox5">
+                                    <label for="checkbox5" class="text-primary mb-0">Enable Backup</label>
+                                </div>
+                                <p class="mb-4">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. non deserunt ullamco est sit aliqua dolor do amet sint sunt nostrud.</p>
+                                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                                    <a href="#" class="btn btn-primary">$ 8.00 / month / droplet</a>
+                                    <a href="#" class="text-body"><i>20 % of the droplet price</i></a>
+                                </div>
+                            </div>-->
+                            <button type="submit" onclick="postData()" class="btn btn-primary mr-0"  style="width: 120px;">Next</button>
+               </div>
+              
+           </div>
+          
+       </div>
+      
+       <!-- Page end  -->
+   </div>
+     </div>
+     
+   
+{%endblock content%}
+
+{%block js%}
+<script>
+
+// Server Select
+
+function highlightCard(card) {
+    var highlightedCards = document.querySelectorAll('.card.highlight');
+    highlightedCards.forEach(function(highlightedCard) {
+        if (highlightedCard !== card) {
+            highlightedCard.classList.remove('highlight');
+        }
+    });
+    card.classList.add('highlight');
+   
+}
+
+// Server Select
+
+function ostik(card) {
+    var ostikCards = document.querySelectorAll('.card.ostik');
+    ostikCards.forEach(function(ostikCard) {
+        if (ostikCard !== card) {
+            ostikCard.classList.remove('ostik');
+        }
+    });
+    card.classList.add('ostik');
+}
+
+function locationC(card) {
+    var locationCards = document.querySelectorAll('.card.locationC');
+    locationCards.forEach(function(locationCard) {
+        if (locationCard !== card) {
+            locationCard.classList.remove('locationC');
+        }
+    });
+    card.classList.add('locationC');
+}
+
+
+
+function postData() {
+    var highlightedCard = document.querySelector('.highlight');
+    var ostikCard = document.querySelector('.ostik');
+    
+    if (highlightedCard !== null) {
+    var inputs = highlightedCard.querySelectorAll('.input-field');
+    var formData = new FormData();
+    inputs.forEach(function (input) {
+      var name = input.name;
+      var value = input.value;
+      formData.append(name, value);
+    });
+    }
+
+    var hostname = document.querySelector('.hostname');
+
+    if(hostname){
+    var hostInput = hostname.name;
+    var hostValue = hostname.value;
+    formData.append(hostInput, hostValue);
+    }
+
+    if (ostikCard !== null) {
+    //var select = document.querySelector('#select');
+    var osId = ostikCard.querySelector('#osId');
+    if (osId !== null) {
+        var osIdName = osId.name;
+      var osIdValue = osId.value;
+      formData.append(osIdName, osIdValue);
+    }
+  
+   }
+
+
+var locationCard = document.querySelector('.locationC');
+   if (locationCard !== null) {
+    var locationId = locationCard.querySelector('#locationId');
+    if (locationId !== null) {
+      var locationName = locationId.name;
+      var locationValue = locationId.value;
+      formData.append(locationName, locationValue);
+    }
+   }
+
+
+
+   function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+   function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+var csrftoken = getCookie('csrftoken');
+   $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+var project_id = document.querySelector('.project_id').value;
+    $.ajax({
+      url: '',
+      method: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+         console.log('Veriler başarıyla gönderildi!', response);
+         window.location.href="/cloud/project-view/"+project_id;
+       },
+      error: function (xhr, status, error) {
+        console.error('Bir hata oluştu:', error);
+      }
+    });
+  }
+
+// Extra Droplet
+
+  function increaseDroplets() {
+    var input = document.getElementById('dropletsInput');
+  var value = parseInt(input.value);
+  value = isNaN(value) ? 0 : value;
+  value++;
+  input.value = value;
+
+  var container = document.getElementById('hostnameContainer');
+  for (var i = 2; i <= value; i++) {
+    var label = document.createElement('label');
+    label.textContent = 'Choose a hostname ' + i;
+
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'hostname_' + i;
+    input.className = 'form-control hostname';
+
+    container.appendChild(label);
+    container.appendChild(input);
+  }
+}
+
+function decreaseDroplets() {
+    var input = document.getElementById('dropletsInput');
+  var value = parseInt(input.value);
+  value = isNaN(value) ? 0 : value;
+  if (value > 1) {
+    value--;
+    input.value = value;
+
+    var container = document.getElementById('hostnameContainer');
+    container.removeChild(container.lastChild); // Remove last input
+    container.removeChild(container.lastChild); // Remove last label
+  }
+}
+
+
+
+
+
+
+</script>
+{%endblock js%}
+
+{%block css%}
+<style>
+    .highlight {
+      outline: 5px solid #062b78;
+    }
+
+    .ostik {
+      outline: 5px solid #062b78;
+    }
+    .locationC {
+      outline: 5px solid #062b78;
+    }
+
+
+h3 {
+  text-align: center;
+}
+
+.oscart{
+    height: 175px;
+}
+.cardback {
+   background-color: rgba(255, 255, 255, 0);
+  }
+
+</style>
+{%endblock css%}

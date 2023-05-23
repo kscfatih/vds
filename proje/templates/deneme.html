@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VM Config</title>
+</head>
+<body>
+    <h2>Configure VM</h2>
+    <form action="{% url 'cloud:deneme' %}" method="post">
+        <!-- Django requires this line for CSRF protection -->
+        {% csrf_token %}
+
+        <label for="name">Hostname:</label><br>
+        <input type="text" id="name" name="name" value=""><br>
+
+
+        <label for="ram">RAM:</label><br>
+        <select id="ram" name="ram">
+            <option value="1024">1 GB</option>
+            <option value="2048">2 GB</option>
+            <option value="4096">4 GB</option>
+            <option value="8192">8 GB</option>
+            <!-- Add more options as needed -->
+        </select><br>
+
+        <label for="disk">Disk:</label><br>
+        <input type="text" id="disk" name="disk" value="50G"><br>
+
+
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
